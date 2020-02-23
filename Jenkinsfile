@@ -3,7 +3,7 @@ pipeline {
         node { label 'DEVOPS' }
     }
     parameters {
-        string(name 'new_version', description: 'deployed version')
+        string(name: 'new_version', description: 'deployed version')
     }
     stages {
         stage('Build') {
