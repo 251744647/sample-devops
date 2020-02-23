@@ -13,7 +13,7 @@ pipeline {
                     mvn clean package -Dmaven.test.skip=true
                     pwd
                     ls -l
-                    if [[ ${new_version} != '' ]];then
+                    if [ "${new_version}" != '' ];then
                         docker build -t springboothelloworld:${new_version} .
                     else
                         docker build -t springboothelloworld:latest .
@@ -25,7 +25,6 @@ pipeline {
     post {
         always {
             echo 'Clean up the job workspace'
-            cleanWs()
         }
     }
 }
