@@ -1,5 +1,7 @@
 pipeline {
-    agent any 
+    agent {
+        node { label 'DEVOPS' }
+    } 
     stages {
         stage('Build') { 
             steps {
