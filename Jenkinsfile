@@ -1,18 +1,31 @@
 pipeline {
     agent {
         node { label 'DEVOPS' }
-    } 
+    }
+    parameters {
+        string(name 'new_version', description: 'deployed version')
+    }
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
                 sh (script:"""
-		    mvn --version
+                    mvn --version
                     mvn clean package -Dmaven.test.skip=true
                     pwd
                     ls -l
-                    docker build -t springboothelloworld:0.1 .
-	        """)
+                    if [[ ${new_version} != '' ]];then
+                        docker build -t springboothelloworld:${new_version} .
+                    else
+                        docker build -t springboothelloworld:latest .
+                    fi
+                """)
             }
+        }
+    }
+    post {
+        always {
+            echo 'Clean up the job workspace'
+            cleanWs()
         }
     }
 }
