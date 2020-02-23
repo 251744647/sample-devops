@@ -8,10 +8,13 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh '''
-				mvn --version
-                mvn clean package -Dmaven.test.skip=true
-				'''
+                sh (script:"""
+		    mvn --version
+                    mvn clean package -Dmaven.test.skip=true
+                    pwd
+                    ls -l
+                    docker build -t springboothelloworld:0.1 .
+	        """)
             }
         }
     }
